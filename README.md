@@ -50,6 +50,7 @@ The original municipal scenario maps **permitting/POSSE to Planning & Developmen
 | `scripts\bootstrap_onelake.py` | Optional, idempotent OneLake directory REST helper |
 | `scripts\tests` | REST behavior, notebook syntax and spatial fixture tests |
 | `notebooks` | Bronze history load, Silver MERGE, synthetic spatial showcase and sample CSV |
+| `PBI` | Semantic model inventory, BPA and memory diagnostic notebooks; see the [complete usage guide](PBI/README.md) |
 
 Workspace convention: `<Prefix>-<Area>-<Layer?>-<ENV>`. Defaults are `DEMO-Hub-Ingestion-DEV`, `DEMO-Hub-Curated-DEV`, `DEMO-Permitting-DEV`, `DEMO-Spatial-DEV`, `DEMO-Recreation-DEV` and `SEC-Secure-DEV`. Item names such as `lh_bronze` are scoped to a workspace and configured in `item_names`.
 
