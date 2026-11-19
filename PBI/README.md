@@ -1,4 +1,4 @@
-# Diagnose a Power BI semantic model with the three PBI notebooks
+# Power BI Diagnostic Toolkit
 
 This guide explains how to investigate model structure, relationships, best-practice findings, and storage statistics using the three notebooks in this folder. It also explains when to move from model analysis to Power BI report diagnostics.
 
