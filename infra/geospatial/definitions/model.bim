@@ -1,0 +1,64 @@
+{
+  "name": "CanadianGeospatial",
+  "compatibilityLevel": 1604,
+  "model": {
+    "culture": "en-CA",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "LakehouseSource",
+        "kind": "m",
+        "expression": "let Source = Sql.Database(\"{{ .SQL_ENDPOINT }}\", \"{{ .DATABASE }}\") in Source"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Parks",
+        "columns": [
+          {"name": "Park ID", "dataType": "int64", "sourceColumn": "park_id", "isKey": true, "summarizeBy": "none"},
+          {"name": "Park", "dataType": "string", "sourceColumn": "park_name", "summarizeBy": "none"},
+          {"name": "Area ID", "dataType": "string", "sourceColumn": "area_id", "isHidden": true, "summarizeBy": "none"},
+          {"name": "Latitude", "dataType": "double", "sourceColumn": "latitude", "dataCategory": "Latitude", "summarizeBy": "none"},
+          {"name": "Longitude", "dataType": "double", "sourceColumn": "longitude", "dataCategory": "Longitude", "summarizeBy": "none"},
+          {"name": "Hectares", "dataType": "double", "sourceColumn": "hectares", "formatString": "#,0.00", "summarizeBy": "sum"},
+          {"name": "Facilities", "dataType": "boolean", "sourceColumn": "facilities"},
+          {"name": "Washrooms", "dataType": "boolean", "sourceColumn": "washrooms"},
+          {"name": "Distance Km", "dataType": "double", "sourceColumn": "distance_km", "formatString": "0.00", "summarizeBy": "none"},
+          {"name": "Geometry WKT", "dataType": "string", "sourceColumn": "geometry_wkt", "isHidden": true, "summarizeBy": "none"},
+          {"name": "Source URL", "dataType": "string", "sourceColumn": "source_url", "dataCategory": "WebUrl", "summarizeBy": "none"}
+        ],
+        "measures": [
+          {"name": "Park Count", "expression": "COUNTROWS('Parks')", "formatString": "#,0"},
+          {"name": "Total Hectares", "expression": "SUM('Parks'[Hectares])", "formatString": "#,0.00"},
+          {"name": "Parks With Washrooms", "expression": "CALCULATE([Park Count], 'Parks'[Washrooms] = TRUE())", "formatString": "#,0"},
+          {"name": "Average Distance Km", "expression": "AVERAGE('Parks'[Distance Km])", "formatString": "0.00"}
+        ],
+        "partitions": [
+          {
+            "name": "Parks",
+            "mode": "directLake",
+            "source": {"type": "entity", "schemaName": "dbo", "entityName": "gold_parks", "expressionSource": "LakehouseSource"}
+          }
+        ]
+      },
+      {
+        "name": "Areas",
+        "columns": [
+          {"name": "Area ID", "dataType": "string", "sourceColumn": "area_id", "isKey": true, "summarizeBy": "none"},
+          {"name": "Local Area", "dataType": "string", "sourceColumn": "area_name", "summarizeBy": "none"},
+          {"name": "Geometry WKT", "dataType": "string", "sourceColumn": "geometry_wkt", "isHidden": true, "summarizeBy": "none"}
+        ],
+        "partitions": [
+          {
+            "name": "Areas",
+            "mode": "directLake",
+            "source": {"type": "entity", "schemaName": "dbo", "entityName": "dim_local_areas", "expressionSource": "LakehouseSource"}
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {"name": "ParksToAreas", "fromTable": "Parks", "fromColumn": "Area ID", "toTable": "Areas", "toColumn": "Area ID", "crossFilteringBehavior": "oneDirection"}
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "parks_map",
+  "position": {"x": 0, "y": 120, "z": 0, "height": 600, "width": 860, "tabOrder": 0},
+  "visual": {
+    "visualType": "azureMap",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Park ID"}}, "queryRef": "Parks.Park ID", "nativeQueryRef": "Park ID", "active": true}
+          ]
+        },
+        "X": {
+          "projections": [
+            {"field": {"Aggregation": {"Expression": {"Column": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Longitude"}}, "Function": 1}}, "queryRef": "Avg(Parks.Longitude)", "nativeQueryRef": "Average of Longitude"}
+          ]
+        },
+        "Y": {
+          "projections": [
+            {"field": {"Aggregation": {"Expression": {"Column": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Latitude"}}, "Function": 1}}, "queryRef": "Avg(Parks.Latitude)", "nativeQueryRef": "Average of Latitude"}
+          ]
+        },
+        "Size": {
+          "projections": [
+            {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Total Hectares"}}, "queryRef": "Parks.Total Hectares", "nativeQueryRef": "Total Hectares"}
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Park"}}, "queryRef": "Parks.Park", "nativeQueryRef": "Park"},
+            {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Average Distance Km"}}, "queryRef": "Parks.Average Distance Km", "nativeQueryRef": "Average Distance Km"}
+          ]
+        }
+      }
+    },
+    "objects": {
+      "mapControls": [
+        {"properties": {"centerLatitude": {"expr": {"Literal": {"Value": "49.25D"}}}, "centerLongitude": {"expr": {"Literal": {"Value": "-123.12D"}}}, "zoom": {"expr": {"Literal": {"Value": "11D"}}}, "showLabels": {"expr": {"Literal": {"Value": "true"}}}}}
+      ],
+      "bubbleLayer": [
+        {"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

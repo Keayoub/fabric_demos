@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "parks_by_area",
+  "position": {"x": 880, "y": 120, "z": 1, "height": 600, "width": 400, "tabOrder": 1},
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "Areas"}}, "Property": "Local Area"}}, "queryRef": "Areas.Local Area", "nativeQueryRef": "Local Area", "active": true}
+          ]
+        },
+        "Y": {
+          "projections": [
+            {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Park Count"}}, "queryRef": "Parks.Park Count", "nativeQueryRef": "Park Count"}
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "Parks"}}, "Property": "Park Count"}}, "direction": "Descending"}
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

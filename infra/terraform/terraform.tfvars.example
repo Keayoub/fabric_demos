@@ -1,0 +1,26 @@
+# Copy to terraform.tfvars (ignored); use exact existing capacity/group display names.
+prefix                = "DEMO"
+secure_prefix         = "SEC"
+environments          = ["DEV"]
+capacity_name_general = "F4 capacity name"
+# Separate capacity recommended; null deliberately reuses general for a small demo.
+capacity_name_secure = null
+use_cli_auth         = true
+
+# Add TEST/PROD only after reviewing storage, access and capacity availability.
+# environments = ["DEV", "TEST", "PROD"]
+
+# Stage 2: publish dbo hub tables and apply read-only source grants FIRST.
+enable_shortcuts         = false
+shortcut_access_reviewed = false
+shortcut_tables = {
+  planning = []
+  spatial  = []
+}
+
+# Stage 3: run nb_spatial_showcase in EACH environment, then enable this.
+deploy_spatial_model = false
+
+# group_role_map is the single source of truth for group names and role grants.
+# If your groups differ, copy the complete default map from variables.tf here.
+# Changing prefix does NOT rename your Entra groups.

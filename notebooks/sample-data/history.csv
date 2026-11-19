@@ -1,0 +1,6 @@
+permit_id,status,updated_at,latitude,longitude
+P001,submitted,2026-01-01T10:00:00Z,44.640,-63.590
+P002,submitted,2026-01-01T11:00:00Z,44.650,-63.570
+P001,approved,2026-01-02T09:00:00Z,44.640,-63.590
+P003,in review,2026-01-03T08:00:00Z,44.660,-63.580
+P002,approved,2026-01-04T12:00:00Z,44.650,-63.570

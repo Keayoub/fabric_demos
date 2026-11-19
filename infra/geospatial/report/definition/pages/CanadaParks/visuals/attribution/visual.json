@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "attribution",
+  "position": {"x": 0, "y": 740, "z": 4, "height": 60, "width": 1280, "tabOrder": 4},
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {"textRuns": [{"value": "City of Vancouver open data: Parks and Local Area Boundaries. Contains information licensed under the Open Government Licence - Vancouver. https://opendata.vancouver.ca/pages/licence/", "textStyle": {"fontFamily": "Segoe UI", "fontSize": "10pt"}}]}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

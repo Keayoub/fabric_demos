@@ -1,0 +1,5 @@
+capacity_name        = "existing active capacity name"
+workspace_name       = "DEMO-Spatial-DEV"
+notebook_folder_name = "T02 - Engineering"
+# Stage 2 only: after running the notebook and checking SQL endpoint discovery.
+publish_analytics = false

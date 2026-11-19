@@ -1,0 +1,16 @@
+# State and plans can contain tenant metadata and credentials.
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/*.tfvars
+**/*.tfvars.json
+**/crash.log
+**/crash.*.log
+.env
+.env.*
+!.env.example
+**/__pycache__/
+**/*.pyc
+.venv/
+demo-outputs.json

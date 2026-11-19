@@ -1,0 +1,61 @@
+{
+  "name": "SpatialShowcase",
+  "compatibilityLevel": 1604,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "LakehouseSource",
+        "kind": "m",
+        "expression": "let Source = Sql.Database(\"{{ .SQL_ENDPOINT }}\", \"{{ .DATABASE }}\") in Source"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Sites",
+        "columns": [
+          {"name": "Site ID", "dataType": "string", "sourceColumn": "site_id", "summarizeBy": "none"},
+          {"name": "Site", "dataType": "string", "sourceColumn": "site_name", "summarizeBy": "none"},
+          {"name": "Zone", "dataType": "string", "sourceColumn": "zone_id", "summarizeBy": "none"},
+          {"name": "Category", "dataType": "string", "sourceColumn": "category", "summarizeBy": "none"},
+          {"name": "Latitude", "dataType": "double", "sourceColumn": "latitude", "dataCategory": "Latitude", "summarizeBy": "none"},
+          {"name": "Longitude", "dataType": "double", "sourceColumn": "longitude", "dataCategory": "Longitude", "summarizeBy": "none"},
+          {"name": "Geometry WKT", "dataType": "string", "sourceColumn": "geometry_wkt", "isHidden": true, "summarizeBy": "none"},
+          {"name": "Service Requests", "dataType": "int64", "sourceColumn": "service_requests", "summarizeBy": "sum"},
+          {"name": "Distance Km", "dataType": "double", "sourceColumn": "distance_km", "formatString": "0.00", "summarizeBy": "none"}
+        ],
+        "measures": [
+          {"name": "Site Count", "expression": "COUNTROWS('Sites')", "formatString": "0"},
+          {"name": "Total Requests", "expression": "SUM('Sites'[Service Requests])", "formatString": "#,0"},
+          {"name": "Average Distance Km", "expression": "AVERAGE('Sites'[Distance Km])", "formatString": "0.00"}
+        ],
+        "partitions": [
+          {
+            "name": "Sites",
+            "mode": "directLake",
+            "source": {"type": "entity", "schemaName": "dbo", "entityName": "gold_spatial_sites", "expressionSource": "LakehouseSource"}
+          }
+        ]
+      },
+      {
+        "name": "Zones",
+        "columns": [
+          {"name": "Zone", "dataType": "string", "sourceColumn": "zone_id", "summarizeBy": "none"},
+          {"name": "Zone Name", "dataType": "string", "sourceColumn": "zone_name", "summarizeBy": "none"},
+          {"name": "Geometry WKT", "dataType": "string", "sourceColumn": "geometry_wkt", "isHidden": true, "summarizeBy": "none"}
+        ],
+        "partitions": [
+          {
+            "name": "Zones",
+            "mode": "directLake",
+            "source": {"type": "entity", "schemaName": "dbo", "entityName": "gold_spatial_zones", "expressionSource": "LakehouseSource"}
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {"name": "SitesToZones", "fromTable": "Sites", "fromColumn": "Zone", "toTable": "Zones", "toColumn": "Zone", "crossFilteringBehavior": "oneDirection"}
+    ]
+  }
+}
